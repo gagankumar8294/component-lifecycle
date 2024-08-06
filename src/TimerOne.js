@@ -6,43 +6,54 @@ class TimerOne extends React.Component {
         super();
 
         this.state = {
-            name : "ComponentA",
-            data: []
+            time: 0,
         }
+        this.timer = null;
         console.log("ComponentA Constructor")
     }
 
-    static getDerivedStateFromProps(props , state) {
+    static getDerivedStateFromProps() {
         console.log("ComponentA getDerivedStateByprops");
         return null;
     }
 
-    componentDidMount() {
-        console.log("ComponentA componentDidMount");
-        fetch('https://jsonplaceholder.typicode.com/users')
-        .then((response) =>  {
-            if(!response.status === 200) {
-                console.log("failed to fetch data")
-            }
-            return (
-                response.json() 
-            )
-        })
-        .then(data => this.setState({ data }))  
+    shouldComponentUpdate(nextProps, nextState) {
+        return true;
     }
 
     render() {
         console.log("ComponentA render");
         return (
             <>
-                <h2>Time Spent </h2>
-                {this.state.data.map((data , index) => {
-                    return (
-                            <li key={index}>{data.name}</li>
-                    )
-                })}
+                <h2>Time Spent: </h2>
+                {new Date(this.state.time * 1000).toISOString().slice(11,19)}
             </>
         )
+    }
+
+    componentDidMount() {
+        console.log('TimerOne componentDidMount')
+        console.log('_________________________')
+        this.timer = setInterval(() => {
+            this.setState((prevState) => ({time: prevState.time + 1}))
+        }, 1000)
+    }
+
+    getSnapshotBeforeUpdate(prevProps, prevState) {
+        console.log("TimerOne getSnapShotBeforeUpdate");
+        return null;
+    }
+
+    componentDidUpdate() {
+        console.log('Component Update');
+        console.log('________________________');
+        if(this.state.time == 10) {
+            clearInterval(this.timer);
+        }
+    }
+
+    componentWillMount() {
+        console.log('Component Will UnMount');
     }
 }
 
