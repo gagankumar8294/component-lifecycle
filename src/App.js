@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.css';
-import ComponentA from './ComponentA';
+// import ComponentA from './ComponentA';
 import TimerOne from './TimerOne';
-import ComponentB from './ComponentB';
+// import ComponentB from './ComponentB';
 
 class App extends React.Component {
   render() {
     return (
       <>
-        <ComponentA />
+        {/* <ComponentA /> */}
         <TimerOne />
-        <ComponentB />
+        {/* <ComponentB /> */}
       </>
     )
   }
